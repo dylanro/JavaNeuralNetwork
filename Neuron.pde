@@ -1,12 +1,14 @@
+float lr = 0.01;
 public class Neuron {
   float activation;//0-1
   Neuron[] previous_neurons;
   float[] weights;
+  float error;
 
   public Neuron(int input_size) {
     weights = new float[input_size];
     for (int i = 0; i < input_size; i++) {
-      weights[i] = random(-1, 1);
+      weights[i] = random(0, 1);
     }
   }
 
@@ -33,6 +35,15 @@ public class Neuron {
 
   public void fire() {
     activation = sigmoid(weightedSum());
+    error = 0;
+  }
+
+  void setError(float desired) {
+    error = desired - activation;
+  }
+
+  public void adjustWeights() {
+    float changeInWeight = 1 - activation * 1 + activation * error * lr;
   }
 
   public void show(boolean show_text, boolean display_neuron_num, int num) {

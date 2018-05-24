@@ -21,10 +21,10 @@ public class Network {
     }
   }
 
-  public void feedForward() {
+  public void feedForward(Image img) {
     //data gets fed into the input layer
     for (int i = 0; i < input.length; i++) {
-      input[i].activation = data[i];
+      input[i].activation = img.inputs[i];
     }
 
     //all hidden layer neurons fire off the activation of input
@@ -35,6 +35,29 @@ public class Network {
     //all output neurons fire and take the activation from hidden
     for (Neuron n : output) {
       n.fire();
+    }
+  }
+
+  public int getGuess() {
+    float max_val = 0;
+    int index = 0;
+    for (int i = 0; i < output.length; i++) {
+      if (output[i].activation > max_val) {
+        max_val = output[i].activation;
+        index = i;
+      }
+    }
+    return index;
+  }
+
+  public void learn(float[] outputs) {//input is just data --- possibly remove it and just use numbers
+    for (int i = 0; i < outputs.length; i++) {
+      output[i].setError(outputs[i]);
+      output[i].adjustWeights();
+    }
+
+    for (int i = 0; i < hidden.length; i++) {
+      hidden[i].adjustWeights();
     }
   }
 
