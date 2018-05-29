@@ -23,7 +23,7 @@ public class Image {//store all the values for a row and the label of it
     this.label = label;
     for (int i = 0; i < 10; i++) {
       if (label == i) {
-        outputs[i] = label;
+        outputs[i] = 1;
       } else {
         outputs[i] = 0;
       }

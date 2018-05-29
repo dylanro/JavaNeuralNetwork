@@ -50,14 +50,13 @@ public class Network {
     return index;
   }
 
-  public void learn(float[] outputs) {//input is just data --- possibly remove it and just use numbers
-    for (int i = 0; i < outputs.length; i++) {
+  public void learn(float[] outputs) {//outputs is just the array containing what it should output (from image class)
+    for (int i = 0; i < output.length; i++) {
       output[i].setError(outputs[i]);
       output[i].adjustWeights();
     }
-
-    for (int i = 0; i < hidden.length; i++) {
-      hidden[i].adjustWeights();
+    for (Neuron hn : hidden) {
+      hn.adjustWeights();
     }
   }
 

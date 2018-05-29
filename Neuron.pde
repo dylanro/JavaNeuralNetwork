@@ -3,7 +3,7 @@ public class Neuron {
   float activation;//0-1
   Neuron[] previous_neurons;
   float[] weights;
-  float error;
+  float loss;
 
   public Neuron(int input_size) {
     weights = new float[input_size];
@@ -30,20 +30,24 @@ public class Neuron {
   }
 
   public float sigmoid(float num) {
-    return 1 / (1 + exp(-num));
+    return 1 / (1 + (float)Math.pow(Math.E, num*-1));
   }
 
   public void fire() {
     activation = sigmoid(weightedSum());
-    error = 0;
+    loss = 0;
   }
 
   void setError(float desired) {
-    error = desired - activation;
+    loss = desired - activation;
   }
 
   public void adjustWeights() {
-    float changeInWeight = 1 - activation * 1 + activation * error * lr;
+    float weightChange = (1 - activation) * (1 + activation) * loss *lr;
+    for ( int i = 0; i < previous_neurons.length; i++) {
+      previous_neurons[i].loss += weights[i] * loss;
+      weights[i] += previous_neurons[i].activation * weightChange;
+    }
   }
 
   public void show(boolean show_text, boolean display_neuron_num, int num) {
