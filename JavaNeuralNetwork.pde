@@ -14,7 +14,7 @@ void setup() {
   training = new Image[42001];
   testing = new Image[28001];
 
-  loadTesting("test.csv");
+  //loadTesting("test.csv");
   loadTraining("train.csv");
 
   n = new Network(784, 28, 10);
@@ -36,10 +36,16 @@ void keyPressed() {
     n.learn(training[randomIndex].outputs);
     epocs++;
   }
+
+  if (key == 'o') {
+    for (Neuron n : n.input) {
+      println(n.weights);
+    }
+  }
 }
 
 void mousePressed() {
-  for (int i = 0; i < 1000; i++) {
+  for (int i = 0; i < 1000000; i++) {
     int randomIndex = int(random(0, training.length));
     n.feedForward(training[randomIndex]);
     n.learn(training[randomIndex].outputs);

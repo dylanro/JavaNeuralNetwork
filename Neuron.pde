@@ -1,4 +1,4 @@
-float lr = 0.01;
+float lr = 0.1;
 public class Neuron {
   float activation;//0-1
   Neuron[] previous_neurons;
@@ -8,7 +8,7 @@ public class Neuron {
   public Neuron(int input_size) {
     weights = new float[input_size];
     for (int i = 0; i < input_size; i++) {
-      weights[i] = random(0, 1);
+      weights[i] = random(-1, 1);
     }
   }
 
